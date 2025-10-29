@@ -1,0 +1,15 @@
+server:
+  port: 8080
+  host: "0.0.0.0"
+
+database:
+  host: "localhost"
+  port: 5433
+  user: "postgres"
+  password: "postgres"
+  dbname: "hatikago"
+  sslmode: "disable"
+
+jwt:
+  secret_key: "your-secret-key-change-in-production-make-it-very-long-and-random"
+  token_expiration_hours: 24

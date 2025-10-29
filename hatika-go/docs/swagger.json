@@ -1,0 +1,638 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/projects": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Get all projects with pagination and filters",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "projects"
+                ],
+                "summary": "Get all projects",
+                "parameters": [
+                    {
+                        "minimum": 1,
+                        "type": "integer",
+                        "description": "Page number",
+                        "name": "pageNumber",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "maximum": 100,
+                        "minimum": 1,
+                        "type": "integer",
+                        "description": "Page size",
+                        "name": "pageSize",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Group ID filter",
+                        "name": "groupId",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Bildirim No filter",
+                        "name": "bildirimNo",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Project Code filter",
+                        "name": "projectCode",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Project Name filter",
+                        "name": "projectName",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Project Muellef filter",
+                        "name": "projectMuellef",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Paged result with projects",
+                        "schema": {
+                            "type": "object"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Create a new project with 4 OCR projects automatically",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "projects"
+                ],
+                "summary": "Create a new project",
+                "parameters": [
+                    {
+                        "description": "Project data",
+                        "name": "project",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dtos.CreateProjectDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.ProjectDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/projects/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Get a single project by its ID including OCR projects",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "projects"
+                ],
+                "summary": "Get project by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Project ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.ProjectDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Update an existing project",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "projects"
+                ],
+                "summary": "Update a project",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Project ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Project data",
+                        "name": "project",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dtos.UpdateProjectDto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dtos.ProjectDto"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Soft delete a project",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "projects"
+                ],
+                "summary": "Delete a project",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Project ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/utils.SuccessResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/utils.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "dtos.CreateProjectDto": {
+            "type": "object",
+            "required": [
+                "projectCode",
+                "projectName"
+            ],
+            "properties": {
+                "ada": {
+                    "type": "integer"
+                },
+                "adress": {
+                    "type": "string"
+                },
+                "bagimsizBS": {
+                    "type": "integer"
+                },
+                "bildirimNo": {
+                    "type": "string"
+                },
+                "blokS": {
+                    "type": "integer"
+                },
+                "groupId": {
+                    "type": "integer"
+                },
+                "kuruluGuc": {
+                    "type": "integer"
+                },
+                "parsel": {
+                    "type": "integer"
+                },
+                "projectCode": {
+                    "type": "string"
+                },
+                "projectComment": {
+                    "type": "string"
+                },
+                "projectMuellef": {
+                    "type": "string"
+                },
+                "projectName": {
+                    "type": "string"
+                },
+                "ruhsatGecerlilikDate": {
+                    "type": "string"
+                },
+                "talepGucu": {
+                    "type": "integer"
+                },
+                "yapiSahibi": {
+                    "type": "string"
+                },
+                "yapiYuksekligi": {
+                    "type": "number"
+                }
+            }
+        },
+        "dtos.OcrProjectDto": {
+            "type": "object",
+            "properties": {
+                "ada": {
+                    "type": "integer"
+                },
+                "adress": {
+                    "type": "string"
+                },
+                "bagimsizBS": {
+                    "type": "integer"
+                },
+                "blokS": {
+                    "type": "integer"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "creatorUserId": {
+                    "type": "integer"
+                },
+                "deleterUserId": {
+                    "type": "integer"
+                },
+                "deletionTime": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDeleted": {
+                    "type": "boolean"
+                },
+                "kuruluGuc": {
+                    "type": "integer"
+                },
+                "lastModifierId": {
+                    "type": "integer"
+                },
+                "parsel": {
+                    "type": "integer"
+                },
+                "pdfPath": {
+                    "type": "string"
+                },
+                "projectCode": {
+                    "type": "string"
+                },
+                "projectComment": {
+                    "type": "string"
+                },
+                "projectId": {
+                    "type": "integer"
+                },
+                "projectMuellef": {
+                    "type": "string"
+                },
+                "projectName": {
+                    "type": "string"
+                },
+                "ruhsatGecerlilikDate": {
+                    "type": "string"
+                },
+                "talepGucu": {
+                    "type": "integer"
+                },
+                "type": {
+                    "type": "integer"
+                },
+                "typeName": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "yapiSahibi": {
+                    "type": "string"
+                },
+                "yapiYuksekligi": {
+                    "type": "number"
+                }
+            }
+        },
+        "dtos.ProjectDto": {
+            "type": "object",
+            "required": [
+                "projectCode",
+                "projectName"
+            ],
+            "properties": {
+                "ada": {
+                    "type": "integer"
+                },
+                "adress": {
+                    "type": "string"
+                },
+                "bagimsizBS": {
+                    "type": "integer"
+                },
+                "bildirimNo": {
+                    "type": "string"
+                },
+                "blokS": {
+                    "type": "integer"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "creatorUserId": {
+                    "type": "integer"
+                },
+                "deleterUserId": {
+                    "type": "integer"
+                },
+                "deletionTime": {
+                    "type": "string"
+                },
+                "groupId": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isDeleted": {
+                    "type": "boolean"
+                },
+                "kuruluGuc": {
+                    "type": "integer"
+                },
+                "lastModifierId": {
+                    "type": "integer"
+                },
+                "ocrProjects": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dtos.OcrProjectDto"
+                    }
+                },
+                "parsel": {
+                    "type": "integer"
+                },
+                "projectCode": {
+                    "type": "string"
+                },
+                "projectComment": {
+                    "type": "string"
+                },
+                "projectMuellef": {
+                    "type": "string"
+                },
+                "projectName": {
+                    "type": "string"
+                },
+                "ruhsatGecerlilikDate": {
+                    "type": "string"
+                },
+                "talepGucu": {
+                    "type": "integer"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "yapiSahibi": {
+                    "type": "string"
+                },
+                "yapiYuksekligi": {
+                    "type": "number"
+                }
+            }
+        },
+        "dtos.UpdateProjectDto": {
+            "type": "object",
+            "required": [
+                "projectCode",
+                "projectName"
+            ],
+            "properties": {
+                "ada": {
+                    "type": "integer"
+                },
+                "adress": {
+                    "type": "string"
+                },
+                "bagimsizBS": {
+                    "type": "integer"
+                },
+                "bildirimNo": {
+                    "type": "string"
+                },
+                "blokS": {
+                    "type": "integer"
+                },
+                "groupId": {
+                    "type": "integer"
+                },
+                "kuruluGuc": {
+                    "type": "integer"
+                },
+                "parsel": {
+                    "type": "integer"
+                },
+                "projectCode": {
+                    "type": "string"
+                },
+                "projectComment": {
+                    "type": "string"
+                },
+                "projectMuellef": {
+                    "type": "string"
+                },
+                "projectName": {
+                    "type": "string"
+                },
+                "ruhsatGecerlilikDate": {
+                    "type": "string"
+                },
+                "talepGucu": {
+                    "type": "integer"
+                },
+                "yapiSahibi": {
+                    "type": "string"
+                },
+                "yapiYuksekligi": {
+                    "type": "number"
+                }
+            }
+        },
+        "utils.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "details": {},
+                "error": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "utils.SuccessResponse": {
+            "type": "object",
+            "properties": {
+                "data": {},
+                "message": {
+                    "type": "string"
+                },
+                "success": {
+                    "type": "boolean"
+                }
+            }
+        }
+    }
+}

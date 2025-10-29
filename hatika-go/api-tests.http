@@ -1,0 +1,63 @@
+### Health Check
+GET http://localhost:8080/health
+
+### Get All Projects (with pagination)
+GET http://localhost:8080/api/v1/projects?pageNumber=1&pageSize=10
+
+### Get All Projects (with filters)
+GET http://localhost:8080/api/v1/projects?pageNumber=1&pageSize=10&projectName=Test&groupId=1
+
+### Get Project by ID
+GET http://localhost:8080/api/v1/projects/1
+
+### Create Project
+POST http://localhost:8080/api/v1/projects
+Content-Type: application/json
+
+{
+  "projectName": "Test Projesi",
+  "projectCode": "PRJ-001",
+  "projectComment": "Bu bir test projesidir",
+  "projectMuellef": "Test Müellif",
+  "ada": 123,
+  "parsel": 456,
+  "talepGucu": 1000,
+  "kuruluGuc": 950,
+  "bagimsizBS": 10,
+  "blokS": 5,
+  "yapiYuksekligi": 45.5,
+  "ruhsatGecerlilikDate": "2025-12-31",
+  "yapiSahibi": "Ahmet Yılmaz",
+  "adress": "İstanbul, Türkiye",
+  "groupId": 1,
+  "bildirimNo": "BLD-2025-001"
+}
+
+### Update Project
+PUT http://localhost:8080/api/v1/projects/1
+Content-Type: application/json
+
+{
+  "projectName": "Updated Project Name",
+  "projectCode": "PRJ-001",
+  "projectComment": "Updated comment",
+  "yapiSahibi": "Updated Owner",
+  "adress": "Updated Address"
+}
+
+### Delete Project
+DELETE http://localhost:8080/api/v1/projects/1
+
+### Get All Projects with Multiple Filters
+GET http://localhost:8080/api/v1/projects?pageNumber=1&pageSize=20&projectCode=PRJ&bildirimNo=BLD&groupId=1
+
+### Create Another Project
+POST http://localhost:8080/api/v1/projects
+Content-Type: application/json
+
+{
+  "projectName": "İkinci Proje",
+  "projectCode": "PRJ-002",
+  "yapiSahibi": "Mehmet Demir",
+  "adress": "Ankara, Türkiye"
+}

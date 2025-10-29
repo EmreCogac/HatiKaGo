@@ -1,0 +1,417 @@
+definitions:
+  dtos.CreateProjectDto:
+    properties:
+      ada:
+        type: integer
+      adress:
+        type: string
+      bagimsizBS:
+        type: integer
+      bildirimNo:
+        type: string
+      blokS:
+        type: integer
+      groupId:
+        type: integer
+      kuruluGuc:
+        type: integer
+      parsel:
+        type: integer
+      projectCode:
+        type: string
+      projectComment:
+        type: string
+      projectMuellef:
+        type: string
+      projectName:
+        type: string
+      ruhsatGecerlilikDate:
+        type: string
+      talepGucu:
+        type: integer
+      yapiSahibi:
+        type: string
+      yapiYuksekligi:
+        type: number
+    required:
+    - projectCode
+    - projectName
+    type: object
+  dtos.OcrProjectDto:
+    properties:
+      ada:
+        type: integer
+      adress:
+        type: string
+      bagimsizBS:
+        type: integer
+      blokS:
+        type: integer
+      createdAt:
+        type: string
+      creatorUserId:
+        type: integer
+      deleterUserId:
+        type: integer
+      deletionTime:
+        type: string
+      id:
+        type: integer
+      isDeleted:
+        type: boolean
+      kuruluGuc:
+        type: integer
+      lastModifierId:
+        type: integer
+      parsel:
+        type: integer
+      pdfPath:
+        type: string
+      projectCode:
+        type: string
+      projectComment:
+        type: string
+      projectId:
+        type: integer
+      projectMuellef:
+        type: string
+      projectName:
+        type: string
+      ruhsatGecerlilikDate:
+        type: string
+      talepGucu:
+        type: integer
+      type:
+        type: integer
+      typeName:
+        type: string
+      updatedAt:
+        type: string
+      yapiSahibi:
+        type: string
+      yapiYuksekligi:
+        type: number
+    type: object
+  dtos.ProjectDto:
+    properties:
+      ada:
+        type: integer
+      adress:
+        type: string
+      bagimsizBS:
+        type: integer
+      bildirimNo:
+        type: string
+      blokS:
+        type: integer
+      createdAt:
+        type: string
+      creatorUserId:
+        type: integer
+      deleterUserId:
+        type: integer
+      deletionTime:
+        type: string
+      groupId:
+        type: integer
+      id:
+        type: integer
+      isDeleted:
+        type: boolean
+      kuruluGuc:
+        type: integer
+      lastModifierId:
+        type: integer
+      ocrProjects:
+        items:
+          $ref: '#/definitions/dtos.OcrProjectDto'
+        type: array
+      parsel:
+        type: integer
+      projectCode:
+        type: string
+      projectComment:
+        type: string
+      projectMuellef:
+        type: string
+      projectName:
+        type: string
+      ruhsatGecerlilikDate:
+        type: string
+      talepGucu:
+        type: integer
+      updatedAt:
+        type: string
+      yapiSahibi:
+        type: string
+      yapiYuksekligi:
+        type: number
+    required:
+    - projectCode
+    - projectName
+    type: object
+  dtos.UpdateProjectDto:
+    properties:
+      ada:
+        type: integer
+      adress:
+        type: string
+      bagimsizBS:
+        type: integer
+      bildirimNo:
+        type: string
+      blokS:
+        type: integer
+      groupId:
+        type: integer
+      kuruluGuc:
+        type: integer
+      parsel:
+        type: integer
+      projectCode:
+        type: string
+      projectComment:
+        type: string
+      projectMuellef:
+        type: string
+      projectName:
+        type: string
+      ruhsatGecerlilikDate:
+        type: string
+      talepGucu:
+        type: integer
+      yapiSahibi:
+        type: string
+      yapiYuksekligi:
+        type: number
+    required:
+    - projectCode
+    - projectName
+    type: object
+  utils.ErrorResponse:
+    properties:
+      details: {}
+      error:
+        type: string
+      message:
+        type: string
+    type: object
+  utils.SuccessResponse:
+    properties:
+      data: {}
+      message:
+        type: string
+      success:
+        type: boolean
+    type: object
+info:
+  contact: {}
+paths:
+  /projects:
+    get:
+      consumes:
+      - application/json
+      description: Get all projects with pagination and filters
+      parameters:
+      - description: Page number
+        in: query
+        minimum: 1
+        name: pageNumber
+        required: true
+        type: integer
+      - description: Page size
+        in: query
+        maximum: 100
+        minimum: 1
+        name: pageSize
+        required: true
+        type: integer
+      - description: Group ID filter
+        in: query
+        name: groupId
+        type: integer
+      - description: Bildirim No filter
+        in: query
+        name: bildirimNo
+        type: string
+      - description: Project Code filter
+        in: query
+        name: projectCode
+        type: string
+      - description: Project Name filter
+        in: query
+        name: projectName
+        type: string
+      - description: Project Muellef filter
+        in: query
+        name: projectMuellef
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Paged result with projects
+          schema:
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get all projects
+      tags:
+      - projects
+    post:
+      consumes:
+      - application/json
+      description: Create a new project with 4 OCR projects automatically
+      parameters:
+      - description: Project data
+        in: body
+        name: project
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.CreateProjectDto'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/dtos.ProjectDto'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create a new project
+      tags:
+      - projects
+  /projects/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Soft delete a project
+      parameters:
+      - description: Project ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/utils.SuccessResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Delete a project
+      tags:
+      - projects
+    get:
+      consumes:
+      - application/json
+      description: Get a single project by its ID including OCR projects
+      parameters:
+      - description: Project ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.ProjectDto'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get project by ID
+      tags:
+      - projects
+    put:
+      consumes:
+      - application/json
+      description: Update an existing project
+      parameters:
+      - description: Project ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Project data
+        in: body
+        name: project
+        required: true
+        schema:
+          $ref: '#/definitions/dtos.UpdateProjectDto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dtos.ProjectDto'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Update a project
+      tags:
+      - projects
+swagger: "2.0"
